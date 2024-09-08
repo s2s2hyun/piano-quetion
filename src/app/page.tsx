@@ -1,101 +1,102 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button"; // ShadCN의 Button 컴포넌트
+import AdultComponent from "@/components/adult/AdultComponent";
+import StudentComponent from "@/components/student/StudentComponent";
 import Image from "next/image";
+import PianoImage from "@/images/bg.jpg";
+import AdultResultComponent from "@/components/result/AdultResultComponent";
+import StudentResultComponent from "@/components/result/StudentResultComponent";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [selectedTab, setSelectedTab] = useState(0);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  // Framer Motion 애니메이션 설정
+  const variants = {
+    enter: { opacity: 0, x: 100 }, // 우측에서 시작
+    center: { opacity: 1, x: 0 }, // 가운데로 이동
+    exit: { opacity: 0, x: -100 }, // 좌측으로 퇴장
+  };
+
+  return (
+    <div className="relative min-h-screen bg-white overflow-x-hidden flex justify-center items-center">
+      {/* selectedTab === 0일 때 두 개의 버튼만 중앙에 표시 */}
+      {selectedTab === 0 && (
+        <div className="flex flex-col justify-center items-center gap-4">
+          <Image
+            src={PianoImage}
+            alt="piano-image"
+            className="w-full h-auto max-h-[50vh] object-cover"
+            layout="responsive"
+            width={1200}
+            height={800}
+          />
+          <div className="flex gap-4">
+            <Button
+              variant="default"
+              onClick={() => setSelectedTab(1)} // 성인상담으로 이동
+              className="text-base sm:text-lg md:text-xl py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 w-full sm:w-40 md:w-48 h-16 sm:h-20 md:h-24"
+            >
+              성인상담
+            </Button>
+            <Button
+              variant="default"
+              onClick={() => setSelectedTab(2)} // 학생상담으로 이동
+              className="text-base sm:text-lg md:text-xl py-3 sm:py-4 md:py-6 px-4 sm:px-6 md:px-8 w-full sm:w-40 md:w-48 h-16 sm:h-20 md:h-24"
+            >
+              학생상담
+            </Button>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      )}
+
+      {/* selectedTab === 1 또는 2일 때 콘텐츠 및 '이전으로' 버튼 표시 */}
+      {selectedTab !== 0 && (
+        <>
+          {/* 상단의 '이전으로' 버튼 */}
+
+          {/* 상담 내용 렌더링 */}
+          <motion.div
+            key={selectedTab}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            variants={variants}
+            transition={{ duration: 0.5 }} // 애니메이션 지속 시간
+            className="w-full h-full flex flex-col justify-center items-center p-8 bg-white rounded-lg shadow-lg text-black"
+          >
+            {selectedTab === 1 && (
+              <>
+                {/* <h2 className="text-3xl font-bold mb-4">성인상담 내용</h2>
+                <p className="text-lg">
+                  성인 상담에 대한 자세한 내용을 여기에 표시합니다.
+                </p> */}
+
+                <AdultComponent setSelectedTab={setSelectedTab} />
+              </>
+            )}
+            {selectedTab === 2 && (
+              <>
+                {/* <h2 className="text-3xl font-bold mb-4">학생상담 내용</h2>
+                <p className="text-lg">
+                  학생 상담에 대한 자세한 내용을 여기에 표시합니다.
+                </p> */}
+
+                <StudentComponent setSelectedTab={setSelectedTab} />
+              </>
+            )}
+
+            {selectedTab === 3 && (
+              <AdultResultComponent setSelectedTab={setSelectedTab} />
+            )}
+            {selectedTab === 4 && (
+              <StudentResultComponent setSelectedTab={setSelectedTab} />
+            )}
+          </motion.div>
+        </>
+      )}
     </div>
   );
 }
